@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KAVIYA STORE | Top Up</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#f5f7fa;color:#222;}
+.container{max-width:650px;margin:0 auto;padding:20px 15px;}
+
+/* 🔥 PRO OFFER BOX - SITE THEME EKATA GALAPENA */
+.offer-box{background:#fff;border-radius:20px;padding:18px;margin-bottom:25px;border:2px solid #ff6b00;box-shadow:0 4px 20px rgba(255,107,0,0.12);position:relative;overflow:hidden;}
+.offer-box::after{content:"";position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg, #ff6b00, #ff8a00);}
+.offer-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.offer-left{display:flex;align-items:center;gap:10px;}
+.offer-icon{width:36px;height:36px;background:linear-gradient(135deg, #ff6b00, #ff8a00);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.offer-title{font-size:16px;font-weight:800;color:#222;}
+.offer-subtitle{font-size:11px;color:#777;margin-top:2px;}
+.offer-badge{background:linear-gradient(90deg, #ff6b00, #ff8a00);color:#fff;font-size:10px;font-weight:800;padding:5px 10px;border-radius:20px;}
+.countdown{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;}
+.time-item{background:#f5f7fa;border:1px solid #e0e0e0;border-radius:12px;padding:10px;text-align:center;}
+.time-num{font-size:20px;font-weight:800;color:#ff6b00;display:block;}
+.time-label{font-size:10px;color:#777;font-weight:600;margin-top:2px;}
+.time-sep{color:#ff6b00;font-weight:800;}
+
+/* STEP 1 - VERIFY BOX */
+.verify-box{background:#fff;border-radius:20px;padding:20px;margin-bottom:25px;border:1px solid #e0e0e0;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+.step-title{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:700;margin-bottom:15px;color:#222;}
+.step-number{width:28px;height:28px;background:#ff6b00;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;}
+.input-group{display:flex;gap:10px;margin-bottom:12px;}
+#uidInput{flex:1;padding:14px;background:#f5f7fa;border:2px solid #e0e0e0;border-radius:12px;color:#222;font-size:15px;outline:none;}
+#uidInput:focus{border-color:#ff6b00;}
+.verify-btn{width:100%;padding:14px;background:linear-gradient(90deg, #ff6b00, #ff8a00);border:none;border-radius:12px;color:#fff;font-weight:700;font-size:15px;cursor:pointer;transition:0.3s;}
+.verify-btn:hover{transform:scale(1.02);}
+.verify-btn:disabled{background:#ccc;cursor:not-allowed;}
+
+/* VERIFIED BOX */
+.verified-box{background:#e8f5e9;border:2px solid #3fb950;border-radius:20px;padding:18px;margin-bottom:25px;display:none;}
+.verified-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.verified-header .tick{width:32px;height:32px;background:#3fb950;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;}
+.player-name{font-size:18px;font-weight:800;color:#2e7d32;}
+.player-uid{font-size:13px;color:#555;}
+#ffNameInput{width:100%;padding:12px;background:#fff;border:2px solid #3fb950;border-radius:10px;color:#222;font-size:14px;margin-top:8px;outline:none;}
+.change-id{margin-top:10px;background:#fff;border:1px solid #3fb950;padding:8px 15px;border-radius:8px;color:#2e7d32;cursor:pointer;font-size:13px;font-weight:600;}
+
+/* PACKAGES - 2 COLUMN GRID */
+.package-section{margin-bottom:30px;}
+.package-title{font-size:20px;font-weight:700;margin-bottom:18px;color:#222;border-left:4px solid #ff6b00;padding-left:12px;}
+.grid{display:grid;grid-template-columns: repeat(2, 1fr);gap:15px;}
+
+.card{background:#fff;border-radius:18px;padding:12px;border:1px solid #e0e0e0;display:flex;flex-direction:column;align-items:center;text-align:center;transition:0.3s;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+.card:hover{transform:translateY(-3px);box-shadow:0 6px 15px rgba(255,107,0,0.15);border-color:#ff6b00;}
+.card img{width:100%;height:100px;object-fit:contain;background:#f5f7fa;border-radius:12px;padding:6px;margin-bottom:10px;}
+.card h3{font-size:12px;font-weight:700;margin-bottom:8px;color:#333;min-height:32px;}
+.price{font-size:16px;font-weight:800;color:#ff6b00;margin-bottom:10px;}
+.price span{font-size:11px;color:#777;font-weight:600;margin-left:2px;}
+
+/* + - BUTTONS */
+.qty-control{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;}
+.qty-btn{width:30px;height:30px;background:#f5f7fa;border:1px solid #ddd;border-radius:8px;color:#222;font-size:18px;font-weight:700;cursor:pointer;}
+.qty{font-weight:700;font-size:15px;min-width:20px;text-align:center;color:#222;}
+
+/* CART BAR */
+.cart-bar{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);background:#fff;padding:12px 20px;border-radius:50px;display:none;align-items:center;gap:15px;border:2px solid #ff6b00;box-shadow:0 5px 20px rgba(255,107,0,0.2);z-index:999;width:90%;max-width:500px;}
+.cart-bar.active{display:flex;}
+.cart-info{flex:1;font-size:14px;color:#222;}
+.cart-total{font-weight:800;color:#ff6b00;font-size:16px;}
+.checkout-btn{padding:12px 22px;background:linear-gradient(90deg, #ff6b00, #ff8a00);border:none;border-radius:30px;color:#fff;font-weight:700;cursor:pointer;font-size:14px;}
+
+.page-title{text-align:center;margin-bottom:25px;padding-top:10px;}
+.page-title h1{font-size:28px;font-weight:800;color:#ff6b00;}
+.page-title p{color:#777;font-size:13px;margin-top:6px}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="page-title">
+<h1>Free Fire Diamond<br>Top Up</h1>
+<p>Fast & Secure - 1 to 5 Minutes Delivery</p>
+</div>
+
+<!-- 🔥 PRO OFFER BOX -->
+<div class="offer-box">
+  <div class="offer-header">
+    <div class="offer-left">
+      <div class="offer-icon">⚡</div>
+      <div>
+        <div class="offer-title">FLASH SALE LIVE</div>
+        <div class="offer-subtitle">Limited time offer on all packages</div>
+      </div>
+    </div>
+    <div class="offer-badge">20% OFF</div>
+  </div>
+  <div class="countdown">
+    <div class="time-item">
+      <span class="time-num" id="hours">24</span>
+      <span class="time-label">HOURS</span>
+    </div>
+    <div class="time-item">
+      <span class="time-num" id="minutes">00</span>
+      <span class="time-label">MINUTES</span>
+    </div>
+    <div class="time-item">
+      <span class="time-num" id="seconds">00</span>
+      <span class="time-label">SECONDS</span>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 1 - ID VERIFY -->
+<div class="verify-box" id="verifyBox">
+<div class="step-title"><div class="step-number">1</div> ID Verify</div>
+<div class="input-group">
+<input type="number" id="uidInput" placeholder="Enter Your Free Fire UID">
+</div>
+<button class="verify-btn" id="verifyBtn" onclick="verifyUID()">✓ VERIFY ID</button>
+</div>
+
+<!-- VERIFIED -->
+<div class="verified-box" id="verifiedBox">
+<div class="verified-header">
+<div class="tick">✓</div>
+<div style="flex:1;">
+<div class="player-name">ID Verified</div>
+<div class="player-uid" id="playerUID">UID: 0000</div>
+<input type="text" id="ffNameInput" placeholder="Enter Your Free Fire Name" maxlength="20">
+</div>
+</div>
+<button class="change-id" onclick="changeID()">CHANGE ID</button>
+</div>
+
+<!-- STEP 2 - PACKAGES -->
+<div id="packageSection">
+<div class="step-title"><div class="step-number">2</div> Select Package</div>
+<div id="packages"></div>
+</div>
+
+</div>
+
+<!-- CART BAR -->
+<div class="cart-bar" id="cartBar">
+<div class="cart-info">
+Items: <span id="cartCount">0</span> | Total: <span class="cart-total" id="cartTotal">Rs. 0</span>
+</div>
+<button class="checkout-btn" onclick="goToCheckout()">NEXT →</button>
+</div>
+
+<script>
+
+let cart = [];
+let verified = false;
+
+// 🔥 TIMER SET KARANNA MEKEN - 24 HOURS
+let totalSeconds = 48 * 60 * 60; // 24 hours. 48 karanna nam 48 * 60 * 60
+
+const packagesData = [
+  {
+    title:"MEMBERSHIP",
+    items:[
+      ["WEEKLY LITE MEMBERSHIP",130,"logo.png"],
+      ["WEEKLY MEMBERSHIP",590,"logo (1).png"],
+      ["MONTHLY MEMBERSHIP",2950,"logo (2).png"],
+      ["VIP MEMBERSHIP",3540,"c25a7c30482f80250ba3195038697e94.webp"],
+      ["VIP PLUS MEMBERSHIP",3670,"c25a7c30482f80250ba3195038697e94.webp"],
+      ["S VIP MEMBERSHIP",5310,"c25a7c30482f80250ba3195038697e94.webp"],
+      ["S VIP PLUS MEMBERSHIP",5830,"c25a7c30482f80250ba3195038697e94.webp"]
+    ]
+  },
+  {
+    title:"DIAMOND PACK",
+    items:[
+      ["25 💎",100,"oss-7fb466290162147777f368e9116bdb22.png"],
+      ["50 💎",200,"oss-7fb466290162147777f368e9116bdb22.png"],
+      ["100 💎",400,"oss-7fb466290162147777f368e9116bdb22.png"],
+      ["310 💎",1030,"oss-7fb466290162147777f368e9116bdb22.png"],
+      ["520 💎",1720,"oss-7fb466290162147777f368e9116bdb22.png"],
+      ["1060 💎",3380,"oss-7fb466290162147777f368e9116bdb22.png"],
+      ["2180 💎",6840,"oss-7fb466290162147777f368e9116bdb22.png"],
+      ["5600 💎",16930,"oss-7fb466290162147777f368e9116bdb22.png"],
+      ["11500 💎",34880,"oss-7fb466290162147777f368e9116bdb22.png"],
+      ["23000 💎",69760,"oss-7fb466290162147777f368e9116bdb22.png"],
+      ["46000 💎",139520,"oss-7fb466290162147777f368e9116bdb22.png"]
+    ]
+  },
+  {
+    title:"LEVEL UP PASS PACKAGE",
+    items:[
+      ["LEVEL 6",180,"IMG_20260223_234328_528.jpg"],
+      ["LEVEL 10",300,"IMG_20260223_234328_528.jpg"],
+      ["LEVEL 15",300,"IMG_20260223_234328_528.jpg"],
+      ["LEVEL 20",300,"IMG_20260223_234328_528.jpg"],
+      ["LEVEL 25",300,"IMG_20260223_234328_528.jpg"],
+      ["LEVEL 30",400,"IMG_20260223_234328_528.jpg"]
+    ]
+  },
+  {
+    title:"EVO ACCESS PACKAGE",
+    items:[
+      ["EVO ACCESS — 3 DAY",200,"1769096175.webp"],
+      ["EVO ACCESS — 7 DAY",350,"1769096175.webp"],
+      ["EVO ACCESS — 30 DAY",900,"1769096175.webp"]
+    ]
+  }
+];
+
+window.onload = function(){
+loadPackages();
+startCountdown();
+}
+
+function startCountdown(){
+updateTimerDisplay();
+setInterval(() => {
+if(totalSeconds > 0){
+totalSeconds--;
+updateTimerDisplay();
+}
+}, 1000);
+}
+
+function updateTimerDisplay(){
+let h = Math.floor(totalSeconds / 3600);
+let m = Math.floor((totalSeconds % 3600) / 60);
+let s = totalSeconds % 60;
+document.getElementById('hours').innerText = String(h).padStart(2,'0');
+document.getElementById('minutes').innerText = String(m).padStart(2,'0');
+document.getElementById('seconds').innerText = String(s).padStart(2,'0');
+if(totalSeconds <= 0){
+document.querySelector('.offer-title').innerText = 'OFFER ENDED';
+}
+}
+
+function verifyUID(){
+let uid = document.getElementById('uidInput').value;
+if(uid.length < 8){
+alert('Please enter valid UID');
+return;
+}
+document.getElementById('verifyBtn').innerText = 'VERIFYING...';
+document.getElementById('verifyBtn').disabled = true;
+setTimeout(() => {
+document.getElementById('playerUID').innerText = 'UID: ' + uid;
+document.getElementById('verifyBox').style.display = 'none';
+document.getElementById('verifiedBox').style.display = 'block';
+verified = true;
+}, 800);
+}
+
+function changeID(){
+document.getElementById('verifyBox').style.display = 'block';
+document.getElementById('verifiedBox').style.display = 'none';
+document.getElementById('verifyBtn').innerText = '✓ VERIFY ID';
+document.getElementById('verifyBtn').disabled = false;
+document.getElementById('uidInput').value = '';
+document.getElementById('ffNameInput').value = '';
+verified = false;
+}
+
+function loadPackages(){
+const packagesDiv = document.getElementById('packages');
+packagesDiv.innerHTML = '';
+packagesData.forEach(pkg => {
+  let html = `<div class="package-section">`;
+  html += `<h2 class="package-title">${pkg.title}</h2>`;
+  html += `<div class="grid">`;
+  pkg.items.forEach((item, index) => {
+    let id = pkg.title.replace(/\s/g,'') + index;
+    html += `
+    <div class="card">
+      <img src="${item[2]}" alt="${item[0]}">
+      <h3>${item[0]}</h3>
+      <div class="price">Rs. ${item[1]} <span>LKR</span></div>
+      <div class="qty-control">
+        <button class="qty-btn" onclick="updateQty('${id}', '${item[0]}', ${item[1]}, -1)">-</button>
+        <span class="qty" id="qty-${id}">0</span>
+        <button class="qty-btn" onclick="updateQty('${id}', '${item[0]}', ${item[1]}, 1)">+</button>
+      </div>
+    </div>
+    `;
+  });
+  html += `</div></div>`;
+  packagesDiv.innerHTML += html;
+});
+}
+
+function updateQty(id, name, price, change){
+let qtyEl = document.getElementById('qty-'+id);
+let qty = parseInt(qtyEl.innerText) + change;
+if(qty < 0) qty = 0;
+qtyEl.innerText = qty;
+let found = cart.find(i => i.id === id);
+if(found){
+found.qty = qty;
+found.total = qty * price;
+if(qty === 0) cart = cart.filter(i => i.id !== id);
+}else if(qty > 0){
+cart.push({id:id, name:name, qty:qty, price:price, total:qty * price});
+}
+updateCart();
+}
+
+function updateCart(){
+let total = 0;
+let count = 0;
+cart.forEach(item => {
+count += item.qty;
+total += item.total;
+});
+document.getElementById('cartCount').innerText = count;
+document.getElementById('cartTotal').innerText = 'Rs. ' + total;
+if(count > 0){
+document.getElementById('cartBar').classList.add('active');
+}else{
+document.getElementById('cartBar').classList.remove('active');
+}
+}
+
+function goToCheckout(){
+if(cart.length === 0){
+alert('Please select at least 1 item');
+return;
+}
+if(!verified){
+alert('Please verify your ID first!');
+return;
+}
+let uid = document.getElementById('uidInput').value;
+let ffName = document.getElementById('ffNameInput').value;
+if(ffName.trim() === ''){
+alert('Please enter your Free Fire Name');
+return;
+}
+localStorage.setItem('cart', JSON.stringify(cart));
+localStorage.setItem('uid', uid);
+localStorage.setItem('playerName', ffName);
+window.location.href = 'checkout.html';
+}
+
+</script>
+</body>
+</html>
