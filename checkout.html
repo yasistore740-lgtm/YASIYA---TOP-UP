@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout | YASI STORE</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#f5f7fa;color:#222;padding-bottom:100px;}
+.container{max-width:650px;margin:0 auto;padding:20px 15px;}
+h1{color:#ff6b00;text-align:center;margin-bottom:15px;font-size:26px;font-weight:800;}
+
+/* === BANNER CSS === */
+.banner-container{margin-bottom:20px;border-radius:20px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,0.1);}
+.banner-container img{width:100%;height:220px;object-fit:cover;display:block;}
+
+/* BOX */
+.box{background:#fff;border-radius:20px;padding:20px;margin-bottom:15px;border:1px solid #e0e0e0;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+.box h2{font-size:16px;margin-bottom:12px;color:#ff6b00;display:flex;align-items:center;gap:8px;}
+.row{display:flex;justify-content:space-between;margin-bottom:10px;font-size:14px;}
+.row span:first-child{color:#777;}
+.row span:last-child{font-weight:700;color:#222;}
+.total-row{border-top:2px dashed #e0e0e0;padding-top:12px;margin-top:12px;font-weight:800;font-size:18px;color:#ff6b00;}
+.locked{background:#e8f5e9;padding:12px;border-radius:10px;border:1px solid #3fb950;}
+
+/* FORM */
+.form-group{margin-bottom:15px;}
+.form-group label{font-size:13px;font-weight:600;margin-bottom:6px;display:block;color:#444;}
+.form-group input{width:100%;padding:14px;background:#f5f7fa;border:2px solid #e0e0e0;border-radius:12px;font-size:15px;outline:none;}
+.form-group input:focus{border-color:#ff6b00;}
+
+/* UPLOAD */
+.upload-box{border:2px dashed #ff6b00;border-radius:15px;padding:20px;text-align:center;background:#fff8f0;cursor:pointer;}
+.upload-box:hover{background:#ffeee0;}
+.upload-box input{display:none;}
+.upload-preview{margin-top:10px;max-width:100%;border-radius:12px;display:none;}
+
+/* PAYMENT DETAILS */
+.payment-card{background:linear-gradient(135deg, #ff6b00, #ff8a00);color:#fff;border-radius:15px;padding:15px;margin-bottom:12px;}
+.payment-card h3{font-size:15px;margin-bottom:8px;}
+.payment-card .detail{font-size:13px;margin-bottom:4px;display:flex;justify-content:space-between;}
+
+/* BUTTON */
+.pay-btn{width:100%;padding:16px;background:linear-gradient(90deg, #ff6b00, #ff8a00);border:none;border-radius:15px;color:#fff;font-weight:800;font-size:16px;cursor:pointer;margin-top:20px;box-shadow:0 4px 15px rgba(255,107,0,0.3);transition:0.3s;}
+.pay-btn:disabled{background:#ccc;cursor:not-allowed;box-shadow:none;}
+.back-btn{width:100%;padding:12px;background:#e0e0e0;border:none;border-radius:12px;color:#333;font-weight:600;cursor:pointer;margin-top:10px;}
+.warning{background:#fff3cd;border:1px solid #ffeeba;color:#856404;padding:12px;border-radius:10px;font-size:13px;margin-top:15px;text-align:center;font-weight:600;}
+
+/* SUCCESS POPUP */
+.success-popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:9999;justify-content:center;align-items:center;}
+.success-popup.active{display:flex;}
+.success-box{background:#fff;border-radius:25px;padding:30px;text-align:center;max-width:350px;animation:pop 0.5s ease;}
+@keyframes pop{0%{transform:scale(0.5);opacity:0;}100%{transform:scale(1);opacity:1;}}
+.success-icon{width:80px;height:80px;background:linear-gradient(135deg, #3fb950, #2ecc71);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:40px;color:#fff;animation:bounce 0.6s ease;}
+@keyframes bounce{0%,100%{transform:scale(1);}50%{transform:scale(1.2);}}
+.success-box h2{color:#3fb950;font-size:22px;margin-bottom:10px;}
+.success-box p{color:#555;font-size:14px;line-height:1.6;}
+.loader{width:50px;height:50px;border:4px solid #f3f3f3;border-top:4px solid #ff6b00;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto;}
+@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Complete Your Order</h1>
+
+<!-- === EKA PHOTO FILE === -->
+<div class="banner-container">
+  <img src="images (8).jpg" alt="YASI STORE Banner">
+</div>
+
+<!-- 1. PLAYER INFO - LOCKED -->
+<div class="box">
+<h2>👤 Player Details</h2>
+<div class="locked">
+<div class="row"><span>Free Fire Name:</span> <span id="cName">-</span></div>
+<div class="row"><span>Free Fire UID:</span> <span id="cUID">-</span></div>
+</div>
+</div>
+
+<!-- 2. ORDER SUMMARY -->
+<div class="box">
+<h2>🛒 Order Summary</h2>
+<div id="cartItems"></div>
+<div class="row total-row"><span>Total Amount:</span> <span id="cTotal">Rs. 0</span></div>
+</div>
+
+<!-- 3. CONTACT & PAYMENT -->
+<div class="box">
+<h2>📞 Contact & Payment</h2>
+<div class="form-group">
+<label>Your WhatsApp Number *</label>
+<input type="tel" id="userNumber" placeholder="07XXXXXXXX" maxlength="10">
+</div>
+
+<h2 style="margin-top:20px;">💳 Payment Details</h2>
+<div class="payment-card">
+<h3>🏦 Please send me a message to request the bank details.</h3>
+<div
+<div class="payment-card">
+<h3>📲 EZ CASH</h3>
+<div class="detail"><span>Number:</span> <span>0768975510</span></div>
+</div>
+
+<div class="warning">⚠️ අනිවාර්යයෙන් වැඩියෙන් Rs.20 දමන්න! <br>📸 මුදල් දැම්මාට පස්සේ Risit Photo එක අනිවාර්යයෙන් Upload කරන්න!</div>
+
+<div class="form-group" style="margin-top:15px;">
+<label>Upload Payment Screenshot *</label>
+<label class="upload-box" for="receiptUpload">
+<span id="uploadText">📷 Click to Upload Payment Slip</span>
+<img id="preview" class="upload-preview">
+</label>
+<input type="file" id="receiptUpload" accept="image/*">
+</div>
+
+</div>
+
+<button class="pay-btn" id="placeOrderBtn" onclick="placeOrder()" disabled>PLACE ORDER</button>
+<button class="back-btn" onclick="history.back()">← BACK TO SHOP</button>
+
+</div>
+
+<!-- SUCCESS POPUP -->
+<div class="success-popup" id="successPopup">
+<div class="success-box">
+<div class="success-icon">✓</div>
+<h2>Order Sent Successfully!</h2>
+<p>Thank you for choosing YASI STORE ❤️<br><br>
+Your Top Up will be done within 1-5 Minutes.<br>
+We will contact you on WhatsApp soon.</p>
+<div class="loader" style="margin-top:15px;"></div>
+</div>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let uid = localStorage.getItem('uid');
+let name = localStorage.getItem('playerName');
+let uploadedFile = null;
+
+document.getElementById('cName').innerText = name;
+document.getElementById('cUID').innerText = uid;
+
+// CART LOAD
+let html = '';
+let total = 0;
+cart.forEach(item => {
+html += `<div class="row"><span>${item.name} x ${item.qty}</span> <span>Rs. ${item.total}</span></div>`;
+total += item.total;
+});
+document.getElementById('cartItems').innerHTML = html;
+document.getElementById('cTotal').innerText = 'Rs. ' + (total + 20); // Rs.20 wadi
+
+// PHOTO UPLOAD PREVIEW
+document.getElementById('receiptUpload').addEventListener('change', function(e){
+uploadedFile = e.target.files[0];
+if(uploadedFile){
+let reader = new FileReader();
+reader.onload = function(event){
+document.getElementById('preview').src = event.target.result;
+document.getElementById('preview').style.display = 'block';
+document.getElementById('uploadText').innerText = '✅ Uploaded: ' + uploadedFile.name;
+checkForm();
+}
+reader.readAsDataURL(uploadedFile);
+}
+});
+
+document.getElementById('userNumber').addEventListener('input', checkForm);
+
+function checkForm(){
+let number = document.getElementById('userNumber').value;
+if(number.length === 10 && uploadedFile){
+document.getElementById('placeOrderBtn').disabled = false;
+}else{
+document.getElementById('placeOrderBtn').disabled = true;
+}
+}
+
+// TELEGRAM BOT EKATA YAWANNA
+async function placeOrder(){
+let number = document.getElementById('userNumber').value;
+let orderText = `🆕 *NEW ORDER - YASI STORE* 🆕\n\n`;
+orderText += `👤 *Name:* ${name}\n`;
+orderText += `🆔 *UID:* ${uid}\n`;
+orderText += `📞 *WhatsApp:* ${number}\n\n`;
+orderText += `📦 *ORDER DETAILS:*\n`;
+cart.forEach(item => {
+orderText += `- ${item.name} x ${item.qty} = Rs.${item.total}\n`;
+});
+orderText += `\n💰 *Total:* Rs.${total + 20}\n`;
+orderText += `⏰ *Time:* ${new Date().toLocaleString('en-LK')}`;
+
+// BOT TOKEN EKA DANNA ME THANATA
+const BOT_TOKEN = "8687844751:AAFqhwr8NIh3Nt34WlAjHkEa6ISNbmC7mqo"; 
+const CHAT_ID = "8324590734"; // Oyage telegram chat id
+
+const formData = new FormData();
+formData.append('chat_id', CHAT_ID);
+formData.append('photo', uploadedFile);
+formData.append('caption', orderText);
+formData.append('parse_mode', 'Markdown');
+
+document.getElementById('placeOrderBtn').innerText = 'SENDING...';
+document.getElementById('placeOrderBtn').disabled = true;
+
+try{
+let response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+method: 'POST',
+body: formData
+});
+
+if(response.ok){
+showSuccessPopup();
+}else{
+alert('❌ Error sending order. Please contact admin on WhatsApp 0764290237');
+document.getElementById('placeOrderBtn').innerText = 'PLACE ORDER';
+document.getElementById('placeOrderBtn').disabled = false;
+}
+}catch(err){
+alert('❌ Network Error. Please try again.');
+document.getElementById('placeOrderBtn').innerText = 'PLACE ORDER';
+document.getElementById('placeOrderBtn').disabled = false;
+}
+}
+
+function showSuccessPopup(){
+document.getElementById('successPopup').classList.add('active');
+setTimeout(() => {
+localStorage.clear();
+window.location.href = 'topup.html';
+}, 3000); // 3 sec passe home yanawa
+}
+</script>
+</body>
+</html>
